@@ -1,46 +1,30 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template, jsonify
 import os
-from pathlib import Path
 
-app = Flask(__name__, template_folder='templates')
+# Obtener la ruta absoluta de la carpeta templates
+template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 
-# Mensajes románticos para las velas
+app = Flask(__name__, template_folder=template_dir)
+
 LOVE_MESSAGES = [
     "Eres mi lugar seguro",
     "Gracias por existir en mi vida",
-    "Contigo todo es más bonito",
-    "Eres mi sueño hecho realidad",
-    "Cada día a tu lado es un regalo",
+    "Contigo todo es mas bonito",
+    "Eres mi sueno hecho realidad",
+    "Cada dia a tu lado es un regalo",
     "Me haces mejor persona",
     "Tu sonrisa es mi sol",
     "Eres mi historia de amor favorita",
-    "Mi corazón late por ti",
-    "Para siempre empezó cuando te conocí 💖"
+    "Mi corazon late por ti",
+    "Para siempre empezo cuando te conoci"
 ]
 
 @app.route('/')
 def index():
-    """Sirve la página principal con la experiencia de cumpleaños"""
     return render_template('index.html')
 
 @app.route('/api/message/<int:candle>')
 def get_message(candle):
-    """Retorna un mensaje romántico para cada vela apagada"""
     if 0 <= candle < len(LOVE_MESSAGES):
-        return jsonify({
-            'message': LOVE_MESSAGES[candle],
-            'candle': candle
-        })
-    return jsonify({'message': 'Te amo 💕', 'candle': candle})
-
-@app.route('/api/messages')
-def get_all_messages():
-    """Retorna todos los mensajes románticos"""
-    return jsonify(LOVE_MESSAGES)
-
-# Handler para Vercel
-def handler(request):
-    return app(request.environ, lambda status, headers: None)
-
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+        return jsonify({'message': LOVE_MESSAGES[candle], 'candle': candle})
+    return jsonify({'message': 'Te amo', 'candle': candle})
