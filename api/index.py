@@ -1,9 +1,7 @@
-from flask import Flask, render_template, jsonify
+﻿from flask import Flask, render_template, jsonify
 import os
 
-# Obtener la ruta absoluta de la carpeta templates
 template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-
 app = Flask(__name__, template_folder=template_dir)
 
 LOVE_MESSAGES = [
@@ -28,3 +26,5 @@ def get_message(candle):
     if 0 <= candle < len(LOVE_MESSAGES):
         return jsonify({'message': LOVE_MESSAGES[candle], 'candle': candle})
     return jsonify({'message': 'Te amo', 'candle': candle})
+
+handler = app
